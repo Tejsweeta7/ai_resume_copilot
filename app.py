@@ -201,7 +201,7 @@ def score_candidate(
     resume_keywords = set(resume_profile["keywords"]) | resume_skills
     keyword_match = percentage(len(jd_keywords & resume_keywords), len(jd_keywords))
 
-    total = round((skill_match * 0.5) + (experience_match * 0.3) + (keyword_match * 0.2))
+    total = round((skill_match * 0.7) + (experience_match * 0.1) + (keyword_match * 0.2))
     return {
         "skill_match": round(skill_match),
         "experience": round(experience_match),
