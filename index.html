@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Hiring Copilot for ATS scoring, resume parsing, skill gap analysis, GenAI resume improvement, and candidate ranking.">
+  <title>AI Hiring Copilot</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="intro-screen" id="intro">
+      <nav class="top-nav" aria-label="Project navigation">
+        <a class="brand" href="#intro">AI Hiring Copilot</a>
+        <button class="nav-action" type="button" data-explore>Explore</button>
+      </nav>
+
+      <div class="intro-layout no-visual">
+        <div class="intro-copy">
+          <p class="eyebrow">Screen faster. Shortlist smarter. Hire better.</p>
+          <h1>AI Hiring Copilot</h1>
+          <p class="hero-copy">
+            Resume parser, ATS score engine, skill gap analyzer, GenAI resume improver, and candidate ranking in one clean web app.
+          </p>
+          <div class="intro-actions">
+            <button class="btn primary" type="button" data-explore>Explore Project</button>
+            <a class="btn ghost" href="#overview">View Features</a>
+          </div>
+        </div>
+
+        <div class="feature-marquee" aria-label="Project capabilities">
+          <span>Resume Parser</span>
+          <span>ATS Score Engine</span>
+          <span>Skill Gap Analyzer</span>
+          <span>HuggingFace GenAI</span>
+          <span>Candidate Ranking</span>
+          <span>ML Logic</span>
+        </div>
+      </div>
+
+      <section class="overview-grid" id="overview" aria-label="Project overview">
+        <article>
+          <span>01</span>
+          <h2>Resume Parser</h2>
+          <p>Extracts skills, education, and experience using NLP-style regex parsing.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>ATS + ML Logic</h2>
+          <p>Scores candidates using skill match, experience match, and keyword relevance.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>GenAI Improver</h2>
+          <p>Uses HuggingFace-ready flow to suggest stronger resume bullets and summaries.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h2>Ranking System</h2>
+          <p>Compares multiple resumes and ranks candidates for the job description.</p>
+        </article>
+      </section>
+    </section>
+
+    <section class="analyzer-section" id="analyzer" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Live Analyzer</p>
+          <h2>Upload resumes and match them with a job description.</h2>
+        </div>
+        <button class="btn ghost" type="button" id="backToIntro">Back</button>
+      </div>
+
+      <div class="workspace-grid">
+      <form class="control-panel" id="analysisForm">
+        <div class="panel-header">
+          <p class="eyebrow">Input</p>
+          <h2>Analyze Candidate Fit</h2>
+        </div>
+
+        <label class="file-drop" for="resumeFiles">
+          <input id="resumeFiles" name="resumes" type="file" multiple accept=".txt,.pdf,.docx">
+          <strong>Upload resumes</strong>
+          <span>TXT works out of the box. PDF/DOCX are supported when backend packages are installed.</span>
+        </label>
+        <div class="file-list" id="fileList">No files selected</div>
+
+        <label class="field">
+          <span>Job description</span>
+          <textarea id="jobDescription" name="job_description" rows="12" placeholder="Paste the role description, required skills, experience, responsibilities, and keywords..." required></textarea>
+        </label>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Analyze</button>
+          <select class="sample-select" id="sampleSelect" aria-label="Choose sample job description">
+            <option value="genai">GenAI / NLP Intern</option>
+            <option value="data">Data Analyst Intern</option>
+            <option value="backend">Backend AI Engineer</option>
+            <option value="mlops">ML Platform Intern</option>
+          </select>
+          <button class="btn ghost" type="button" id="loadSample">Load sample</button>
+        </div>
+      </form>
+
+      <section class="results-panel" aria-live="polite">
+        <div class="score-card">
+          <div>
+            <p class="eyebrow">ATS Score</p>
+            <h2 id="candidateName">Waiting for resume</h2>
+          </div>
+          <div class="score-ring" id="scoreRing" data-score="--"></div>
+        </div>
+
+        <div class="insight-grid">
+          <article>
+            <span>Skill Match</span>
+            <strong id="skillMatch">--</strong>
+          </article>
+          <article>
+            <span>Experience</span>
+            <strong id="experienceScore">--</strong>
+          </article>
+          <article>
+            <span>Keyword Match</span>
+            <strong id="keywordScore">--</strong>
+          </article>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Analysis sections">
+          <button class="tab active" type="button" data-tab="parser">Parser</button>
+          <button class="tab" type="button" data-tab="gaps">Skill Gaps</button>
+          <button class="tab" type="button" data-tab="genai">GenAI</button>
+          <button class="tab" type="button" data-tab="ranking">Ranking</button>
+        </div>
+
+        <div class="tab-page active" id="parser">
+          <h3>Resume Parser</h3>
+          <div class="pill-box" id="parsedSkills"></div>
+          <div class="two-column">
+            <div>
+              <span class="label">Education</span>
+              <p id="parsedEducation">--</p>
+            </div>
+            <div>
+              <span class="label">Experience</span>
+              <p id="parsedExperience">--</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-page" id="gaps">
+          <h3>Missing Skills</h3>
+          <div class="pill-box warning" id="missingSkills"></div>
+        </div>
+
+        <div class="tab-page" id="genai">
+          <h3>Resume Improvement Suggestions</h3>
+          <ul class="suggestion-list" id="suggestions"></ul>
+        </div>
+
+        <div class="tab-page" id="ranking">
+          <h3>Candidate Ranking</h3>
+          <div class="ranking-list" id="rankingList"></div>
+        </div>
+      </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

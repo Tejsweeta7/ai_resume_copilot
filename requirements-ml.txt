@@ -1,0 +1,4 @@
+# Optional advanced ML/NLP packages.
+# Use Python 3.11 or 3.12 for the smoothest Windows install experience.
+scikit-learn==1.6.0
+spacy==3.8.3
